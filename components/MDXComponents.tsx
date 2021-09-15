@@ -1,24 +1,25 @@
-import React from "react";
-import {Link, LinkProps} from "@chakra-ui/react";
-import {default as NextLink, LinkProps as NextLinkProps} from "next/link";
+import React, {HTMLProps} from "react";
+import Link, {LinkProps} from "next/link";
+import Image from "next/image";
 
-const CustomLink = (props: NextLinkProps & LinkProps) => {
+const CustomLink = (props: LinkProps & HTMLProps<HTMLAnchorElement>) => {
   const href = props.href;
   const isInternal = (href && href.startsWith("/")) || href.startsWith("#");
 
   if (isInternal) {
     return (
-      <NextLink href={href}>
-        <Link {...props} />
-      </NextLink>
+      <Link href={href}>
+        <a {...props} />
+      </Link>
     );
   }
 
-  return <Link rel="noopener noreferrer" target="_blank" {...props} />;
+  return <a rel="noopener noreferrer" target="_blank" {...props} />;
 };
 
 const MDXComponents = {
   a: CustomLink,
+  img: Image,
 };
 
 export default MDXComponents;

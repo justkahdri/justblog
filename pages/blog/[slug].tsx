@@ -1,14 +1,19 @@
+import React from "react";
 import {NextPage, GetStaticPaths, GetStaticProps} from "next";
 import {MDXRemote} from "next-mdx-remote";
-import React from "react";
 
 import MDXComponents from "../../components/MDXComponents";
 import {getFiles, getFileBySlug} from "../../lib/mdx";
 
-const DinamyPost: NextPage = (props: Post) => {
-  console.log(props);
-
-  return <>Hello World</>;
+const DinamyPost: NextPage<Post> = ({frontMatter, mdxSource}) => {
+  return (
+    <div className="container px-5 mx-auto">
+      <h1 className="mb-8 text-4xl text-center font-bold">{frontMatter.title}</h1>
+      <article className="prose">
+        <MDXRemote {...mdxSource} components={MDXComponents} />
+      </article>
+    </div>
+  );
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
